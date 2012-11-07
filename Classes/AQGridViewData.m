@@ -185,19 +185,24 @@
 	return ( cols );	
 }
 
+// FIXME: ここの処理がおかしい
 - (CGRect) cellRectAtIndex: (NSUInteger) index
 {
 	NSUInteger numPerRow = [self numberOfItemsPerRow];
-    if ( numPerRow == 0 )       // avoid a divide-by-zero exception
-        return ( CGRectZero );
+	if ( numPerRow == 0 )       // avoid a divide-by-zero exception
+		return ( CGRectZero );
 	NSUInteger skipRows = index / numPerRow;
 	NSUInteger skipCols = index % numPerRow;
 	
 	CGRect result = CGRectZero;
-	result.origin.x = _actualCellSize.width * (CGFloat)skipCols + _leftPadding;
-	result.origin.y = (_actualCellSize.height  * (CGFloat)skipRows) + _topPadding;
-	result.size = _actualCellSize;
-	
+	result.origin.x = (100.0 + _leftPadding) * skipCols + _leftPadding;
+	result.origin.y = (100.0 + 5.0)  * skipRows + 5.0;
+	result.size = (CGSize){100, 100};
+	// FIXME: 本来であれば以下のように計算するべき
+	// result.origin.x = _actualCellSize.width * (CGFloat)skipCols + _leftPadding;
+	// result.origin.y = (_actualCellSize.height  * (CGFloat)skipRows) + _topPadding;
+	// result.size = _actualCellSize
+
 	return ( result );
 }
 
